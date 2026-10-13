@@ -1,0 +1,33 @@
+tag: swe_qwen_path
+seed: 20261010
+data_dir: data
+results_dir: results
+targets: [final_answer_wrong]
+primary_target: final_answer_wrong
+group_col: instance_id
+min_split_n: 120
+classifiers: [logreg, hgb]
+primary_classifier: logreg
+cv_folds: 5
+n_bootstrap: 1000
+min_generator_n: 50
+min_steps_for_examples: 6
+transfer:
+  - {train: python, test: go}
+feature_groups:
+  baseline: [n_steps, n_points, n_chars, mean_consecutive_sim, mean_pairwise_dist]
+  original: [count_h2, euler_char, "beta0_0.5", "beta0_1.0", "beta0_1.5", "beta0_2.0", "beta0_2.5", "beta0_3.0", sh0, sh1, std_h0, min_h0, median_h0, skew_h0, kurt_h0, count_h0, maxmean_ratio_h0, cv_h0, iqr_h0]
+  path: [path_h1_count, path_h1_total, path_h1_max, path_h1_entropy, path_h1_count_per_turn, path_h1_total_per_turn, path_h1_median_birth, path_h1_min_birth]
+  path_per_turn: [path_h1_count_per_turn, path_h1_total_per_turn, path_h1_median_birth, path_h1_min_birth]
+  recurrence: [revisit_frac, revisit_frac_tight]
+feature_sets:
+  baseline: [baseline]
+  original: [original]
+  path: [path]
+  path_per_turn: [path_per_turn]
+  recurrence: [recurrence]
+  original+baseline: [original, baseline]
+  path+baseline: [path, baseline]
+  path_per_turn+baseline: [path_per_turn, baseline]
+  recurrence+baseline: [recurrence, baseline]
+  path+recurrence+baseline: [path, recurrence, baseline]

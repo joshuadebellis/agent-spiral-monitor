@@ -1,0 +1,36 @@
+dataset: Qwen/ProcessBench
+splits: [gsm8k, math, olympiadbench, omnimath]
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+normalize_embeddings: false
+device: cpu
+granularity: word
+tag: original_word
+seed: 20261010
+data_dir: data
+results_dir: results
+primary_target: final_answer_wrong
+classifiers: [logreg, hgb]
+primary_classifier: logreg
+cv_folds: 5
+n_bootstrap: 1000
+min_generator_n: 50
+min_steps_for_examples: 6
+max_points_ph: 100
+limit_per_split: null
+transfer:
+  - {train: math, test: gsm8k}
+  - {train: math, test: olympiadbench}
+  - {train: math, test: omnimath}
+feature_groups:
+  baseline: [n_steps, n_points, n_chars, mean_consecutive_sim, mean_pairwise_dist]
+  generic: [h0_total, h0_max, h0_entropy, h1_count, h1_max, h1_total, h1_entropy]
+  original: [count_h2, euler_char, "beta0_0.5", "beta0_1.0", "beta0_1.5", "beta0_2.0", "beta0_2.5", "beta0_3.0", sh0, sh1, std_h0, min_h0, median_h0, skew_h0, kurt_h0, count_h0, maxmean_ratio_h0, cv_h0, iqr_h0]
+  size_invariant: [skew_h0, kurt_h0, maxmean_ratio_h0, cv_h0]
+feature_sets:
+  baseline: [baseline]
+  generic: [generic]
+  original: [original]
+  size_invariant: [size_invariant]
+  generic+baseline: [generic, baseline]
+  original+baseline: [original, baseline]
+  size_invariant+baseline: [size_invariant, baseline]

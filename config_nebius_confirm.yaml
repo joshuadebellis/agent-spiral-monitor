@@ -1,0 +1,24 @@
+dataset: nebius/SWE-agent-trajectories
+split: train
+model_name: swe-agent-llama-70b
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+normalize_embeddings: false
+device: cuda
+tag: nebius_confirm
+seed: 20261011
+stream_skip: 30000
+shuffle_buffer: 1000
+max_rows_scan: 30000
+max_per_group: 1500
+window: 15
+max_reasoning_chars: 700
+max_action_chars: 300
+max_observation_chars: 400
+exclude_hashes:
+  - data/seen_nebius_main.txt
+data_dir: data
+results_dir: results
+cv_folds: 5
+knn_k: 10
+image_pixels: 20
+n_bootstrap: 500

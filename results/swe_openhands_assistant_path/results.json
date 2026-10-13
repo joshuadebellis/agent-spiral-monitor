@@ -1,0 +1,1470 @@
+{
+  "tag": "swe_openhands_assistant_path",
+  "config": "config_swe_path.yaml",
+  "n_traces": 3000,
+  "group_col": "instance_id",
+  "primary_target": "final_answer_wrong",
+  "primary_classifier": "logreg",
+  "splits": [
+    "python",
+    "go",
+    "typescript",
+    "javascript",
+    "rust"
+  ],
+  "feature_sets": {
+    "baseline": [
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ],
+    "path": [
+      "path_h1_count",
+      "path_h1_total",
+      "path_h1_max",
+      "path_h1_entropy",
+      "path_h1_count_per_turn",
+      "path_h1_total_per_turn",
+      "path_h1_median_birth",
+      "path_h1_min_birth"
+    ],
+    "path_per_turn": [
+      "path_h1_count_per_turn",
+      "path_h1_total_per_turn",
+      "path_h1_median_birth",
+      "path_h1_min_birth"
+    ],
+    "recurrence": [
+      "revisit_frac",
+      "revisit_frac_tight"
+    ],
+    "original+baseline": [
+      "count_h2",
+      "euler_char",
+      "beta0_0.5",
+      "beta0_1.0",
+      "beta0_1.5",
+      "beta0_2.0",
+      "beta0_2.5",
+      "beta0_3.0",
+      "sh0",
+      "sh1",
+      "std_h0",
+      "min_h0",
+      "median_h0",
+      "skew_h0",
+      "kurt_h0",
+      "count_h0",
+      "maxmean_ratio_h0",
+      "cv_h0",
+      "iqr_h0",
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ],
+    "path+baseline": [
+      "path_h1_count",
+      "path_h1_total",
+      "path_h1_max",
+      "path_h1_entropy",
+      "path_h1_count_per_turn",
+      "path_h1_total_per_turn",
+      "path_h1_median_birth",
+      "path_h1_min_birth",
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ],
+    "path_per_turn+baseline": [
+      "path_h1_count_per_turn",
+      "path_h1_total_per_turn",
+      "path_h1_median_birth",
+      "path_h1_min_birth",
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ],
+    "recurrence+baseline": [
+      "revisit_frac",
+      "revisit_frac_tight",
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ],
+    "path+recurrence+baseline": [
+      "path_h1_count",
+      "path_h1_total",
+      "path_h1_max",
+      "path_h1_entropy",
+      "path_h1_count_per_turn",
+      "path_h1_total_per_turn",
+      "path_h1_median_birth",
+      "path_h1_min_birth",
+      "revisit_frac",
+      "revisit_frac_tight",
+      "n_steps",
+      "n_points",
+      "n_chars",
+      "mean_consecutive_sim",
+      "mean_pairwise_dist"
+    ]
+  },
+  "median_points_by_split": {
+    "python": 64.0,
+    "go": 66.0,
+    "typescript": 71.0,
+    "javascript": 67.0,
+    "rust": 79.0
+  },
+  "h1_presence_by_split": {
+    "python": 1.0,
+    "go": 1.0,
+    "typescript": 1.0,
+    "javascript": 1.0,
+    "rust": 1.0
+  },
+  "h2_presence_by_split": {
+    "python": 0.9424882629107981,
+    "go": 0.9173913043478261,
+    "typescript": 0.9504424778761061,
+    "javascript": 0.9260143198090692,
+    "rust": 0.963302752293578
+  },
+  "prevalence": {
+    "final_answer_wrong": 0.629
+  },
+  "pooled": {
+    "final_answer_wrong": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6338678935793254,
+            "ci_low": 0.6126874514080436,
+            "ci_high": 0.6549100837229169
+          },
+          "path": {
+            "auc": 0.6308134676614144,
+            "ci_low": 0.6089599485428997,
+            "ci_high": 0.6516258283108008
+          },
+          "path_per_turn": {
+            "auc": 0.5956759042219641,
+            "ci_low": 0.5738519218235482,
+            "ci_high": 0.6161925149443194
+          },
+          "recurrence": {
+            "auc": 0.5669176390597035,
+            "ci_low": 0.5458221951355988,
+            "ci_high": 0.586150216666747
+          },
+          "original+baseline": {
+            "auc": 0.6305492110153598,
+            "ci_low": 0.6090096798611614,
+            "ci_high": 0.6506890721141848
+          },
+          "path+baseline": {
+            "auc": 0.6306849103741445,
+            "ci_low": 0.6090498324306866,
+            "ci_high": 0.6519032692643982
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6310067797304201,
+            "ci_low": 0.6099463558919742,
+            "ci_high": 0.651631570856278
+          },
+          "recurrence+baseline": {
+            "auc": 0.6339274108419503,
+            "ci_low": 0.6125425630981777,
+            "ci_high": 0.654496309206373
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.6305663519869957,
+            "ci_low": 0.6088431890405018,
+            "ci_high": 0.6517183656218836
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.0033186825639656137,
+            "ci_low": -0.010160316041701053,
+            "ci_high": 0.003585822027557006
+          },
+          "path+baseline": {
+            "delta_auc": -0.003182983205180845,
+            "ci_low": -0.009278575755675342,
+            "ci_high": 0.00280445706933092
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.0028611138489053056,
+            "ci_low": -0.006724468333264752,
+            "ci_high": 0.0009860042977933132
+          },
+          "recurrence+baseline": {
+            "delta_auc": 5.951726262487522e-05,
+            "ci_low": -0.0032385138797460635,
+            "ci_high": 0.0029294921795163464
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.0033015415923296487,
+            "ci_low": -0.00983906928779786,
+            "ci_high": 0.0025301360013052785
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.60032396436392,
+            "ci_low": 0.5796823546979684,
+            "ci_high": 0.6214285782449211
+          },
+          "path": {
+            "auc": 0.5697211401983877,
+            "ci_low": 0.5481762394550538,
+            "ci_high": 0.5891306699320323
+          },
+          "path_per_turn": {
+            "auc": 0.5386233704768666,
+            "ci_low": 0.5162915826447727,
+            "ci_high": 0.5582689501376709
+          },
+          "recurrence": {
+            "auc": 0.5396442105654092,
+            "ci_low": 0.5160725875932484,
+            "ci_high": 0.5599140585433856
+          },
+          "original+baseline": {
+            "auc": 0.5926243351326592,
+            "ci_low": 0.5706348316464641,
+            "ci_high": 0.612991675896075
+          },
+          "path+baseline": {
+            "auc": 0.5797171834907684,
+            "ci_low": 0.5589614279466106,
+            "ci_high": 0.6003819593074073
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.5865930938073003,
+            "ci_low": 0.5641631258457048,
+            "ci_high": 0.6075015194458058
+          },
+          "recurrence+baseline": {
+            "auc": 0.6047606191890321,
+            "ci_low": 0.5841558626931629,
+            "ci_high": 0.6253481440151973
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5844614235291261,
+            "ci_low": 0.5636093208770269,
+            "ci_high": 0.6042789521397189
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.007699629231260774,
+            "ci_low": -0.030282135771704553,
+            "ci_high": 0.011541574137655452
+          },
+          "path+baseline": {
+            "delta_auc": -0.020606780873151598,
+            "ci_low": -0.042325087140978795,
+            "ci_high": -0.0025004530415929983
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.013730870556619701,
+            "ci_low": -0.03320932513540336,
+            "ci_high": 0.0030797933551994054
+          },
+          "recurrence+baseline": {
+            "delta_auc": 0.00443665482511213,
+            "ci_low": -0.01180606559250183,
+            "ci_high": 0.020269734913887578
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.01586254083479388,
+            "ci_low": -0.03703785169495044,
+            "ci_high": 0.0031587373614839686
+          }
+        }
+      }
+    }
+  },
+  "within_split": {
+    "python": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6249675146944169,
+            "ci_low": 0.5874955734165713,
+            "ci_high": 0.6595660726250586
+          },
+          "path": {
+            "auc": 0.6129133927929622,
+            "ci_low": 0.5749731106579298,
+            "ci_high": 0.647502057079157
+          },
+          "path_per_turn": {
+            "auc": 0.5741466732282376,
+            "ci_low": 0.5376820007700015,
+            "ci_high": 0.6126879108491116
+          },
+          "recurrence": {
+            "auc": 0.4931490564055493,
+            "ci_low": 0.45316067788618375,
+            "ci_high": 0.5345978082128304
+          },
+          "original+baseline": {
+            "auc": 0.6026729185904418,
+            "ci_low": 0.5659312500882275,
+            "ci_high": 0.6393847335597719
+          },
+          "path+baseline": {
+            "auc": 0.6041824485349818,
+            "ci_low": 0.5661612930476829,
+            "ci_high": 0.6399287300316668
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6114702158130173,
+            "ci_low": 0.5739356041557943,
+            "ci_high": 0.6458723753690092
+          },
+          "recurrence+baseline": {
+            "auc": 0.6173811590757032,
+            "ci_low": 0.5810116861389847,
+            "ci_high": 0.6529217809083895
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.601815859464421,
+            "ci_low": 0.5645344678564997,
+            "ci_high": 0.6380196178013382
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.022294596103975106,
+            "ci_low": -0.04062807781518254,
+            "ci_high": -0.003248205377421906
+          },
+          "path+baseline": {
+            "delta_auc": -0.020785066159435095,
+            "ci_low": -0.0344145145783313,
+            "ci_high": -0.00809580166920795
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.013497298881399611,
+            "ci_low": -0.02311485483294414,
+            "ci_high": -0.004417699688342506
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.0075863556187136805,
+            "ci_low": -0.014151041073570111,
+            "ci_high": -0.0009744862014669985
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.02315165522999596,
+            "ci_low": -0.037511455107043554,
+            "ci_high": -0.00705951447522936
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.5560931374446367,
+            "ci_low": 0.5181373663477354,
+            "ci_high": 0.5963179998884521
+          },
+          "path": {
+            "auc": 0.5431653681760122,
+            "ci_low": 0.5045838855088991,
+            "ci_high": 0.5805495883054212
+          },
+          "path_per_turn": {
+            "auc": 0.5220043018838713,
+            "ci_low": 0.48420164491676754,
+            "ci_high": 0.5589555374379196
+          },
+          "recurrence": {
+            "auc": 0.49888858784303103,
+            "ci_low": 0.4598013382008674,
+            "ci_high": 0.5358374334516992
+          },
+          "original+baseline": {
+            "auc": 0.5616114923334679,
+            "ci_low": 0.5213394965800656,
+            "ci_high": 0.6019446769166248
+          },
+          "path+baseline": {
+            "auc": 0.5548158428761798,
+            "ci_low": 0.516521814803867,
+            "ci_high": 0.5938510848485693
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.5660737292024927,
+            "ci_low": 0.5278683613405751,
+            "ci_high": 0.6046336776844453
+          },
+          "recurrence+baseline": {
+            "auc": 0.5429552504547942,
+            "ci_low": 0.5069349652890757,
+            "ci_high": 0.5808123725611741
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5394606609861156,
+            "ci_low": 0.5041343720212471,
+            "ci_high": 0.5774159262373939
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.005518354888831123,
+            "ci_low": -0.0311420299990933,
+            "ci_high": 0.044782085674863664
+          },
+          "path+baseline": {
+            "delta_auc": -0.0012772945684569326,
+            "ci_low": -0.037906543212483344,
+            "ci_high": 0.03917799837680049
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": 0.009980591757855928,
+            "ci_low": -0.025144811667971896,
+            "ci_high": 0.04518155597351432
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.013137886989842529,
+            "ci_low": -0.04243793348271442,
+            "ci_high": 0.014092268021743034
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.016632476458521173,
+            "ci_low": -0.05251103417341854,
+            "ci_high": 0.023962012335412033
+          }
+        }
+      }
+    },
+    "go": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6578657967451875,
+            "ci_low": 0.61612250122467,
+            "ci_high": 0.6999045798858597
+          },
+          "path": {
+            "auc": 0.653106488369729,
+            "ci_low": 0.6101992159666477,
+            "ci_high": 0.696167044250619
+          },
+          "path_per_turn": {
+            "auc": 0.6280808435527544,
+            "ci_low": 0.5822756832720433,
+            "ci_high": 0.6719714997126212
+          },
+          "recurrence": {
+            "auc": 0.5717454185881026,
+            "ci_low": 0.5262385131490114,
+            "ci_high": 0.6163120335584915
+          },
+          "original+baseline": {
+            "auc": 0.6251236033971296,
+            "ci_low": 0.5817051311327149,
+            "ci_high": 0.6685523469113688
+          },
+          "path+baseline": {
+            "auc": 0.6533375227568872,
+            "ci_low": 0.6110397151382533,
+            "ci_high": 0.6963820549129518
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.657089521204336,
+            "ci_low": 0.6147969571861046,
+            "ci_high": 0.7012599512727471
+          },
+          "recurrence+baseline": {
+            "auc": 0.6590671755584101,
+            "ci_low": 0.6154226230082378,
+            "ci_high": 0.7005953909210634
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.6502231792179949,
+            "ci_low": 0.6076195879933403,
+            "ci_high": 0.693175214333503
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.032742193348057946,
+            "ci_low": -0.053536718522540924,
+            "ci_high": -0.010602610080321104
+          },
+          "path+baseline": {
+            "delta_auc": -0.0045282739883003575,
+            "ci_low": -0.022974195240636614,
+            "ci_high": 0.013812297635741355
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.0007762755408515787,
+            "ci_low": -0.01636138008709283,
+            "ci_high": 0.013498821829128899
+          },
+          "recurrence+baseline": {
+            "delta_auc": 0.0012013788132225756,
+            "ci_low": -0.012719908247009465,
+            "ci_high": 0.014795045004432938
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.007642617527192641,
+            "ci_low": -0.02707530814853145,
+            "ci_high": 0.012529697863735525
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.5589553549150256,
+            "ci_low": 0.514884805813799,
+            "ci_high": 0.6021631180791104
+          },
+          "path": {
+            "auc": 0.5851361716677911,
+            "ci_low": 0.5387697482605246,
+            "ci_high": 0.6295695319694368
+          },
+          "path_per_turn": {
+            "auc": 0.549566117420917,
+            "ci_low": 0.5039286175472255,
+            "ci_high": 0.5929966580541614
+          },
+          "recurrence": {
+            "auc": 0.5183995785932778,
+            "ci_low": 0.4737666502262655,
+            "ci_high": 0.5662839704080829
+          },
+          "original+baseline": {
+            "auc": 0.6023620955743053,
+            "ci_low": 0.5591753280209861,
+            "ci_high": 0.64736058582751
+          },
+          "path+baseline": {
+            "auc": 0.5766433475958561,
+            "ci_low": 0.5337165375560112,
+            "ci_high": 0.6181093447156183
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.5580127346154201,
+            "ci_low": 0.5135601084678502,
+            "ci_high": 0.6032146793289868
+          },
+          "recurrence+baseline": {
+            "auc": 0.5274052990047038,
+            "ci_low": 0.48470728099852733,
+            "ci_high": 0.5720437891471176
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5600735613488712,
+            "ci_low": 0.518211330794092,
+            "ci_high": 0.603883647553193
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.04340674065927974,
+            "ci_low": 0.0021811357940834924,
+            "ci_high": 0.08778959826762256
+          },
+          "path+baseline": {
+            "delta_auc": 0.017687992680830544,
+            "ci_low": -0.02154336667504636,
+            "ci_high": 0.05925496445044314
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.0009426202996054567,
+            "ci_low": -0.03546686693568229,
+            "ci_high": 0.037746643160571726
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.031550055910321784,
+            "ci_low": -0.06028132664887713,
+            "ci_high": -0.0017425917077227523
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": 0.0011182064338456366,
+            "ci_low": -0.038383247762875376,
+            "ci_high": 0.04470881074866207
+          }
+        }
+      }
+    },
+    "typescript": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6392134555070415,
+            "ci_low": 0.5898691793201923,
+            "ci_high": 0.6860786061180184
+          },
+          "path": {
+            "auc": 0.611862739068938,
+            "ci_low": 0.5587491416853507,
+            "ci_high": 0.6622271018138487
+          },
+          "path_per_turn": {
+            "auc": 0.5884478199372732,
+            "ci_low": 0.5344667914909125,
+            "ci_high": 0.640588609337635
+          },
+          "recurrence": {
+            "auc": 0.6081575548859235,
+            "ci_low": 0.557373938260487,
+            "ci_high": 0.6568218266433131
+          },
+          "original+baseline": {
+            "auc": 0.6508056085111616,
+            "ci_low": 0.603624122996193,
+            "ci_high": 0.699470282507034
+          },
+          "path+baseline": {
+            "auc": 0.6216253612938933,
+            "ci_low": 0.5726847535763848,
+            "ci_high": 0.6688556693311776
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6262376237623761,
+            "ci_low": 0.5784428267918229,
+            "ci_high": 0.6731924593251922
+          },
+          "recurrence+baseline": {
+            "auc": 0.6542340569460673,
+            "ci_low": 0.6055348462159531,
+            "ci_high": 0.7005889191197888
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.630849886230859,
+            "ci_low": 0.5825630522088354,
+            "ci_high": 0.6819341617126993
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.011592153004120198,
+            "ci_low": -0.02816949080149353,
+            "ci_high": 0.05227605396969742
+          },
+          "path+baseline": {
+            "delta_auc": -0.01758809421314811,
+            "ci_low": -0.047929791698261004,
+            "ci_high": 0.010535481036442066
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.012975831744665323,
+            "ci_low": -0.03351694885444675,
+            "ci_high": 0.0068391226431423705
+          },
+          "recurrence+baseline": {
+            "delta_auc": 0.015020601439025838,
+            "ci_low": -0.006991863758291259,
+            "ci_high": 0.03445933837880563
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.008363569276182425,
+            "ci_low": -0.04098035242907962,
+            "ci_high": 0.021652966851480267
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.5800381280364062,
+            "ci_low": 0.5309825264372536,
+            "ci_high": 0.629859142866192
+          },
+          "path": {
+            "auc": 0.5338693807268926,
+            "ci_low": 0.4832602022392806,
+            "ci_high": 0.587590114779577
+          },
+          "path_per_turn": {
+            "auc": 0.5681077424512637,
+            "ci_low": 0.5183042867346591,
+            "ci_high": 0.6209614796838037
+          },
+          "recurrence": {
+            "auc": 0.5693838017342107,
+            "ci_low": 0.5119089630364639,
+            "ci_high": 0.6210491963057128
+          },
+          "original+baseline": {
+            "auc": 0.6155679232519526,
+            "ci_low": 0.5655350465352783,
+            "ci_high": 0.6616475005133692
+          },
+          "path+baseline": {
+            "auc": 0.563787589939118,
+            "ci_low": 0.5144368162105059,
+            "ci_high": 0.6164587694215363
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.588263329438534,
+            "ci_low": 0.5349660905638137,
+            "ci_high": 0.6390863869820274
+          },
+          "recurrence+baseline": {
+            "auc": 0.5741651804932046,
+            "ci_low": 0.5228292094833338,
+            "ci_high": 0.6264153976150926
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5831129696820614,
+            "ci_low": 0.5316143192119488,
+            "ci_high": 0.6348529827156791
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.035529795215546445,
+            "ci_low": -0.015094292717086821,
+            "ci_high": 0.08302602504745475
+          },
+          "path+baseline": {
+            "delta_auc": -0.01625053809728816,
+            "ci_low": -0.05796860501679964,
+            "ci_high": 0.02959677593583381
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": 0.00822520140212779,
+            "ci_low": -0.03174478413102274,
+            "ci_high": 0.052239196853671996
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.0058729475432015565,
+            "ci_low": -0.0430561891867344,
+            "ci_high": 0.028363695159850592
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": 0.003074841645655191,
+            "ci_low": -0.0398823352970743,
+            "ci_high": 0.04990458323069295
+          }
+        }
+      }
+    },
+    "javascript": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6240112063282794,
+            "ci_low": 0.5689822587941036,
+            "ci_high": 0.6819467682967701
+          },
+          "path": {
+            "auc": 0.5835530652603823,
+            "ci_low": 0.524059263032773,
+            "ci_high": 0.6433484889690638
+          },
+          "path_per_turn": {
+            "auc": 0.5596572181938035,
+            "ci_low": 0.4971142652263921,
+            "ci_high": 0.6205700864177992
+          },
+          "recurrence": {
+            "auc": 0.5788837618105911,
+            "ci_low": 0.5184310145339431,
+            "ci_high": 0.6395227996132606
+          },
+          "original+baseline": {
+            "auc": 0.5778400351571082,
+            "ci_low": 0.5200487210217494,
+            "ci_high": 0.63298654027921
+          },
+          "path+baseline": {
+            "auc": 0.585915183476159,
+            "ci_low": 0.5273648043185185,
+            "ci_high": 0.6454815572769894
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.5962151175565811,
+            "ci_low": 0.5378138681304026,
+            "ci_high": 0.6538284577108903
+          },
+          "recurrence+baseline": {
+            "auc": 0.6196715007690617,
+            "ci_low": 0.5609099817439862,
+            "ci_high": 0.6779010741655978
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5866293122390683,
+            "ci_low": 0.5276774506091615,
+            "ci_high": 0.6458556657731872
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.0461711711711712,
+            "ci_low": -0.08626455267778561,
+            "ci_high": -0.005315234907007072
+          },
+          "path+baseline": {
+            "delta_auc": -0.03809602285212044,
+            "ci_low": -0.06390452758970612,
+            "ci_high": -0.013585563056692014
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.02779608877169837,
+            "ci_low": -0.05059141888367246,
+            "ci_high": -0.005024704521439105
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.004339705559217699,
+            "ci_low": -0.023769423906753344,
+            "ci_high": 0.014437636738601337
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.03738189408921111,
+            "ci_low": -0.06871294920093449,
+            "ci_high": -0.0014807090655901188
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.4913480553724457,
+            "ci_low": 0.42944993687592364,
+            "ci_high": 0.555052826296629
+          },
+          "path": {
+            "auc": 0.5552076466710614,
+            "ci_low": 0.49703152701353576,
+            "ci_high": 0.615404081632653
+          },
+          "path_per_turn": {
+            "auc": 0.49791254669303453,
+            "ci_low": 0.43994470912110667,
+            "ci_high": 0.5555697354858724
+          },
+          "recurrence": {
+            "auc": 0.4907575258185014,
+            "ci_low": 0.4306807330925836,
+            "ci_high": 0.5500312209664363
+          },
+          "original+baseline": {
+            "auc": 0.5748187211601845,
+            "ci_low": 0.5122935409457902,
+            "ci_high": 0.6317602520697634
+          },
+          "path+baseline": {
+            "auc": 0.5674851680949242,
+            "ci_low": 0.5092239334519099,
+            "ci_high": 0.6269366149716964
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.5568007031421666,
+            "ci_low": 0.49695837448061264,
+            "ci_high": 0.6162062837693341
+          },
+          "recurrence+baseline": {
+            "auc": 0.5024994506701823,
+            "ci_low": 0.44301814438686465,
+            "ci_high": 0.5666243559063973
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5463634366073391,
+            "ci_low": 0.48938187334091776,
+            "ci_high": 0.608210687607612
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.08347066578773882,
+            "ci_low": 0.016715577090645396,
+            "ci_high": 0.14757825475667638
+          },
+          "path+baseline": {
+            "delta_auc": 0.07613711272247853,
+            "ci_low": 0.018135356472183353,
+            "ci_high": 0.131891050420526
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": 0.06545264776972087,
+            "ci_low": 0.012725566181166981,
+            "ci_high": 0.11682372351351687
+          },
+          "recurrence+baseline": {
+            "delta_auc": 0.011151395297736622,
+            "ci_low": -0.03622052058801361,
+            "ci_high": 0.05895557657247148
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": 0.05501538123489341,
+            "ci_low": -0.004345266584850989,
+            "ci_high": 0.11753800739000582
+          }
+        }
+      }
+    },
+    "rust": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.71437417072092,
+            "ci_low": 0.6380219782543456,
+            "ci_high": 0.7792524692223614
+          },
+          "path": {
+            "auc": 0.7074745687748784,
+            "ci_low": 0.6350298091185116,
+            "ci_high": 0.774404329087818
+          },
+          "path_per_turn": {
+            "auc": 0.6522777532065457,
+            "ci_low": 0.5754346397649969,
+            "ci_high": 0.7222153049344797
+          },
+          "recurrence": {
+            "auc": 0.611233967271119,
+            "ci_low": 0.5315428363009692,
+            "ci_high": 0.6858639630987718
+          },
+          "original+baseline": {
+            "auc": 0.6972136222910217,
+            "ci_low": 0.6230078984253583,
+            "ci_high": 0.767966195481012
+          },
+          "path+baseline": {
+            "auc": 0.7106590004422821,
+            "ci_low": 0.6352002494456763,
+            "ci_high": 0.777269752129575
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.7010172490048652,
+            "ci_low": 0.6251792271573475,
+            "ci_high": 0.7666955405578771
+          },
+          "recurrence+baseline": {
+            "auc": 0.7143741707209199,
+            "ci_low": 0.6399207042957044,
+            "ci_high": 0.7791185515990846
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.6965059708093764,
+            "ci_low": 0.6194405826980606,
+            "ci_high": 0.7631899585892742
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.017160548429898337,
+            "ci_low": -0.050516157456831606,
+            "ci_high": 0.016177013285222298
+          },
+          "path+baseline": {
+            "delta_auc": -0.0037151702786378804,
+            "ci_low": -0.029433566221811126,
+            "ci_high": 0.02060462181481919
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.013356921716054848,
+            "ci_low": -0.03374246620217718,
+            "ci_high": 0.007420122947164622
+          },
+          "recurrence+baseline": {
+            "delta_auc": -1.1102230246251565e-16,
+            "ci_low": -0.024304928268597297,
+            "ci_high": 0.024315072365445632
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.017868199911543647,
+            "ci_low": -0.054267920912812566,
+            "ci_high": 0.015649485775418515
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6652366209641751,
+            "ci_low": 0.5918037203763457,
+            "ci_high": 0.7371556386705652
+          },
+          "path": {
+            "auc": 0.6586908447589562,
+            "ci_low": 0.5893068507890961,
+            "ci_high": 0.7311215467382798
+          },
+          "path_per_turn": {
+            "auc": 0.648031844316674,
+            "ci_low": 0.5745337133457139,
+            "ci_high": 0.7204399408337708
+          },
+          "recurrence": {
+            "auc": 0.5001769128704113,
+            "ci_low": 0.4164230675538579,
+            "ci_high": 0.5744618410122331
+          },
+          "original+baseline": {
+            "auc": 0.671295886775763,
+            "ci_low": 0.5981098549557486,
+            "ci_high": 0.7477819672645177
+          },
+          "path+baseline": {
+            "auc": 0.6698805838124723,
+            "ci_low": 0.5970201683338349,
+            "ci_high": 0.7444016613307951
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6568774878372401,
+            "ci_low": 0.5835673967918361,
+            "ci_high": 0.7299094018286862
+          },
+          "recurrence+baseline": {
+            "auc": 0.6310482087571871,
+            "ci_low": 0.5545291589296253,
+            "ci_high": 0.7033154376168151
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.648297213622291,
+            "ci_low": 0.5767195209009193,
+            "ci_high": 0.7203292944617571
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.006059265811587888,
+            "ci_low": -0.055097634200826605,
+            "ci_high": 0.07526192779920561
+          },
+          "path+baseline": {
+            "delta_auc": 0.004643962848297156,
+            "ci_low": -0.04540763801474536,
+            "ci_high": 0.056897275583034035
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.008359133126935037,
+            "ci_low": -0.05603982075691183,
+            "ci_high": 0.04106224500521232
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.034188412206987984,
+            "ci_low": -0.07256480911480473,
+            "ci_high": 0.001151454002653684
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.01693940734188415,
+            "ci_low": -0.07170979924815749,
+            "ci_high": 0.03655452035886826
+          }
+        }
+      }
+    }
+  },
+  "univariate_auc": {
+    "final_answer_wrong": {
+      "n_steps": 0.6366494923653636,
+      "n_points": 0.6366494923653636,
+      "n_chars": 0.6075465032179793,
+      "mean_consecutive_sim": 0.4636256678432039,
+      "mean_pairwise_dist": 0.5443582158343535,
+      "count_h2": 0.5874587128749171,
+      "euler_char": 0.6291462701007653,
+      "beta0_0.5": 0.613064943808562,
+      "beta0_1.0": 0.5230424653288138,
+      "beta0_1.5": 0.5,
+      "beta0_2.0": 0.5,
+      "beta0_2.5": 0.5,
+      "beta0_3.0": 0.5,
+      "sh0": 0.6345049663584624,
+      "sh1": 0.6155922848486667,
+      "std_h0": 0.5687660071677829,
+      "min_h0": 0.4131962150830075,
+      "median_h0": 0.440279188336902,
+      "skew_h0": 0.5086402400497849,
+      "kurt_h0": 0.5177449528170949,
+      "count_h0": 0.6347437496161136,
+      "maxmean_ratio_h0": 0.5778335811632149,
+      "cv_h0": 0.5736811807843994,
+      "iqr_h0": 0.5541442822241934,
+      "path_h1_count": 0.6288910600786295,
+      "path_h1_total": 0.6253059782471547,
+      "path_h1_max": 0.5948840865600022,
+      "path_h1_entropy": 0.625142662878512,
+      "path_h1_count_per_turn": 0.5917265767432249,
+      "path_h1_total_per_turn": 0.5837096014676482,
+      "path_h1_median_birth": 0.4607845517945407,
+      "path_h1_min_birth": 0.4149276912872917,
+      "revisit_frac": 0.560564052239968,
+      "revisit_frac_tight": 0.5682291614589062
+    }
+  },
+  "length_check": {
+    "final_answer_wrong": {
+      "n_steps": {
+        "spearman_rho": 0.228685714273086,
+        "p_value": 6.811893500615145e-37
+      },
+      "n_points": {
+        "spearman_rho": 0.228685714273086,
+        "p_value": 6.811893500615145e-37
+      },
+      "n_chars": {
+        "spearman_rho": 0.17996963150217465,
+        "p_value": 2.947916889444365e-23
+      },
+      "n_messages": {
+        "spearman_rho": 0.228685714273086,
+        "p_value": 6.811893500615145e-37
+      }
+    }
+  },
+  "per_generator": {
+    "MiniMax-M2.5": {
+      "n": 1879,
+      "prevalence": 0.564129856306546,
+      "baseline": 0.5989402630912065,
+      "path": 0.597275785011634,
+      "path_per_turn": 0.5472020641831963,
+      "recurrence": 0.4947255051028636,
+      "original+baseline": 0.593408897182482,
+      "path+baseline": 0.5951194507798282,
+      "path_per_turn+baseline": 0.5940090308014836,
+      "recurrence+baseline": 0.5998421913516253,
+      "path+recurrence+baseline": 0.5961457829382357
+    },
+    "Qwen3.5-122B-A10B": {
+      "n": 1121,
+      "prevalence": 0.7377341659232828,
+      "baseline": 0.5769604093148747,
+      "path": 0.5526820159744672,
+      "path_per_turn": 0.4663072000263225,
+      "recurrence": 0.469365134203621,
+      "original+baseline": 0.5702276073670097,
+      "path+baseline": 0.568138258931142,
+      "path_per_turn+baseline": 0.5718768765063462,
+      "recurrence+baseline": 0.5772030698615601,
+      "path+recurrence+baseline": 0.5682081780717123
+    }
+  },
+  "transfer": {
+    "python->go": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6606197266401131,
+            "ci_low": 0.6187584312951664,
+            "ci_high": 0.7034544656293343
+          },
+          "path": {
+            "auc": 0.6301693944126644,
+            "ci_low": 0.5888689013925796,
+            "ci_high": 0.6716565882708202
+          },
+          "path_per_turn": {
+            "auc": 0.619320019591716,
+            "ci_low": 0.5755250785977944,
+            "ci_high": 0.6642781450740775
+          },
+          "recurrence": {
+            "auc": 0.5710892809285734,
+            "ci_low": 0.5264559908410108,
+            "ci_high": 0.6159430361317285
+          },
+          "original+baseline": {
+            "auc": 0.6232291214224326,
+            "ci_low": 0.5790734077239876,
+            "ci_high": 0.6671301508379273
+          },
+          "path+baseline": {
+            "auc": 0.623469397185077,
+            "ci_low": 0.5802965497987461,
+            "ci_high": 0.6645381123058544
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6504172481032076,
+            "ci_low": 0.6055872947109461,
+            "ci_high": 0.6926306845813761
+          },
+          "recurrence+baseline": {
+            "auc": 0.6542986258074652,
+            "ci_low": 0.6128236206938973,
+            "ci_high": 0.6966016257215455
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.6227208457706845,
+            "ci_low": 0.578777546631162,
+            "ci_high": 0.6645877268308714
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.03739060521768056,
+            "ci_low": -0.058739447009548,
+            "ci_high": -0.01612376556353965
+          },
+          "path+baseline": {
+            "delta_auc": -0.03715032945503616,
+            "ci_low": -0.0539339430340174,
+            "ci_high": -0.01913680832421565
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.01020247853690559,
+            "ci_low": -0.01823666823994801,
+            "ci_high": -0.002610129481380105
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.006321100832647919,
+            "ci_low": -0.01105314159281318,
+            "ci_high": -0.0015351615340925139
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.03789888086942861,
+            "ci_low": -0.055738953823802964,
+            "ci_high": -0.018481231234395747
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6030274746093208,
+            "ci_low": 0.5585330839373392,
+            "ci_high": 0.6475541055548155
+          },
+          "path": {
+            "auc": 0.563991904555074,
+            "ci_low": 0.5205372918170353,
+            "ci_high": 0.6060364722093279
+          },
+          "path_per_turn": {
+            "auc": 0.5682152131523257,
+            "ci_low": 0.5259481180700648,
+            "ci_high": 0.6110787325444699
+          },
+          "recurrence": {
+            "auc": 0.5014647580145829,
+            "ci_low": 0.4560503866164717,
+            "ci_high": 0.5472706076059577
+          },
+          "original+baseline": {
+            "auc": 0.5456015673372825,
+            "ci_low": 0.5032163382266501,
+            "ci_high": 0.5918798882165717
+          },
+          "path+baseline": {
+            "auc": 0.5767080372242605,
+            "ci_low": 0.5366882504743211,
+            "ci_high": 0.622988932635136
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.559361975436424,
+            "ci_low": 0.5158175660053493,
+            "ci_high": 0.6055588393224497
+          },
+          "recurrence+baseline": {
+            "auc": 0.580478518422682,
+            "ci_low": 0.5365302517492071,
+            "ci_high": 0.6257070987412494
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5545657015590201,
+            "ci_low": 0.5123247884510421,
+            "ci_high": 0.600858626037705
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": -0.057425907272038335,
+            "ci_low": -0.09813874374896242,
+            "ci_high": -0.016311091489793463
+          },
+          "path+baseline": {
+            "delta_auc": -0.026319437385060374,
+            "ci_low": -0.06590547789149662,
+            "ci_high": 0.012608554367261335
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": -0.04366549917289686,
+            "ci_low": -0.08057829736912564,
+            "ci_high": -0.0061444779423758
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.02254895618663877,
+            "ci_low": -0.05074951973234384,
+            "ci_high": 0.005504501009725656
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": -0.04846177305030075,
+            "ci_low": -0.08899381570854581,
+            "ci_high": -0.006659572396200552
+          }
+        }
+      }
+    },
+    "python->java": {
+      "logreg": {
+        "cv": {
+          "baseline": {
+            "auc": 0.6217640320733104,
+            "ci_low": 0.529653672079134,
+            "ci_high": 0.720753831053698
+          },
+          "path": {
+            "auc": 0.6217640320733104,
+            "ci_low": 0.5281878611659717,
+            "ci_high": 0.7243066020172032
+          },
+          "path_per_turn": {
+            "auc": 0.5729667812142039,
+            "ci_low": 0.4668876416845808,
+            "ci_high": 0.6798446823446823
+          },
+          "recurrence": {
+            "auc": 0.5505154639175258,
+            "ci_low": 0.45323367164461015,
+            "ci_high": 0.6478041713734346
+          },
+          "original+baseline": {
+            "auc": 0.6586483390607102,
+            "ci_low": 0.5675801988348531,
+            "ci_high": 0.7534342407175635
+          },
+          "path+baseline": {
+            "auc": 0.6355097365406644,
+            "ci_low": 0.5491015888930059,
+            "ci_high": 0.727948515525835
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.6325315005727377,
+            "ci_low": 0.5392873540233564,
+            "ci_high": 0.7278403936695006
+          },
+          "recurrence+baseline": {
+            "auc": 0.6229095074455899,
+            "ci_low": 0.5314030452306315,
+            "ci_high": 0.7193625901789412
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.6387170675830469,
+            "ci_low": 0.548969414893617,
+            "ci_high": 0.7324334275365204
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.03688430698739975,
+            "ci_low": -0.017901260504201724,
+            "ci_high": 0.09381702898550723
+          },
+          "path+baseline": {
+            "delta_auc": 0.013745704467354014,
+            "ci_low": -0.037713326727452035,
+            "ci_high": 0.0698429917879806
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": 0.010767468499427224,
+            "ci_low": -0.012000886155129389,
+            "ci_high": 0.0369517907547986
+          },
+          "recurrence+baseline": {
+            "delta_auc": 0.001145475372279492,
+            "ci_low": -0.018095345830639906,
+            "ci_high": 0.019822208317353967
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": 0.01695303550973648,
+            "ci_low": -0.03913155535634244,
+            "ci_high": 0.07558882430054858
+          }
+        }
+      },
+      "hgb": {
+        "cv": {
+          "baseline": {
+            "auc": 0.5798396334478808,
+            "ci_low": 0.4750127151173949,
+            "ci_high": 0.6819083951762522
+          },
+          "path": {
+            "auc": 0.5562428407789233,
+            "ci_low": 0.45072626940778726,
+            "ci_high": 0.6571439344968757
+          },
+          "path_per_turn": {
+            "auc": 0.5486827033218786,
+            "ci_low": 0.4403959532182438,
+            "ci_high": 0.6589655532755737
+          },
+          "recurrence": {
+            "auc": 0.5234822451317297,
+            "ci_low": 0.4185250882035144,
+            "ci_high": 0.6197269949851502
+          },
+          "original+baseline": {
+            "auc": 0.5901489117983963,
+            "ci_low": 0.49044816192402135,
+            "ci_high": 0.6940776378486176
+          },
+          "path+baseline": {
+            "auc": 0.6126002290950744,
+            "ci_low": 0.5115872093023256,
+            "ci_high": 0.7147182720357219
+          },
+          "path_per_turn+baseline": {
+            "auc": 0.611225658648339,
+            "ci_low": 0.508058608058608,
+            "ci_high": 0.7135970847478256
+          },
+          "recurrence+baseline": {
+            "auc": 0.5518900343642612,
+            "ci_low": 0.4536755163693631,
+            "ci_high": 0.6515868989289108
+          },
+          "path+recurrence+baseline": {
+            "auc": 0.5940435280641466,
+            "ci_low": 0.5007955021050655,
+            "ci_high": 0.6879530980998984
+          }
+        },
+        "deltas": {
+          "original+baseline": {
+            "delta_auc": 0.010309278350515538,
+            "ci_low": -0.09317592396297093,
+            "ci_high": 0.11592553688141927
+          },
+          "path+baseline": {
+            "delta_auc": 0.03276059564719358,
+            "ci_low": -0.05718643408016334,
+            "ci_high": 0.12237627763871496
+          },
+          "path_per_turn+baseline": {
+            "delta_auc": 0.03138602520045819,
+            "ci_low": -0.05465025600882695,
+            "ci_high": 0.12048496906173536
+          },
+          "recurrence+baseline": {
+            "delta_auc": -0.027949599083619603,
+            "ci_low": -0.11934410714832848,
+            "ci_high": 0.0639443611795907
+          },
+          "path+recurrence+baseline": {
+            "delta_auc": 0.01420389461626581,
+            "ci_low": -0.09091612554112558,
+            "ci_high": 0.11413754883224188
+          }
+        }
+      }
+    }
+  }
+}

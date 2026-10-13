@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents Spiral Before They Run Out of Context</title>
+<meta name="description" content="A label-free topological monitor flags SWE agents heading for context exhaustion about 16 turns early.">
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d1d1b; --muted:#5d5b55; --rule:#dedbd2; --card:#ffffff; --accent:#c4541b; --accent-soft:#f6e6dc; --code:#f1efe9; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#151514; --fg:#ecebe6; --muted:#a8a59c; --rule:#33322e; --card:#1d1c1a; --accent:#f08a4b; --accent-soft:#3a2519; --code:#23221f; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 Georgia, "Iowan Old Style", "Palatino Linotype", serif; }
+  main { max-width:760px; margin:0 auto; padding:48px 16px 80px; }
+  h1, h2, h3, table, .stat, figcaption, .eyebrow, .byline, .pipeline { font-family:-apple-system, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif; }
+  .eyebrow { text-transform:uppercase; letter-spacing:.08em; font-size:12px; color:var(--accent); font-weight:600; }
+  h1 { font-size:clamp(32px, 6vw, 46px); line-height:1.1; margin:8px 0 12px; letter-spacing:-.01em; }
+  .lede { font-size:20px; color:var(--muted); margin:0 0 28px; }
+  h2 { font-size:24px; margin:56px 0 12px; padding-top:16px; border-top:1px solid var(--rule); }
+  h3 { font-size:17px; margin:28px 0 6px; }
+  p, li { max-width:68ch; }
+  a { color:var(--accent); }
+  .byline { font-size:14px; color:var(--muted); margin-bottom:32px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin:24px 0 8px; }
+  .stat { background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:16px; }
+  .stat .big { font-size:30px; font-weight:700; line-height:1.1; }
+  .stat .vs { font-size:14px; color:var(--muted); margin-top:4px; }
+  .stat .label { font-size:13px; margin-top:8px; }
+  .table-wrap { overflow-x:auto; margin:14px 0 6px; }
+  table { border-collapse:collapse; width:100%; font-size:14px; }
+  th, td { padding:7px 10px; border-bottom:1px solid var(--rule); text-align:right; white-space:nowrap; }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { font-weight:600; color:var(--muted); border-bottom:2px solid var(--rule); }
+  tr.hl td { background:var(--accent-soft); font-weight:600; }
+  .note { font-size:14px; color:var(--muted); }
+  figure { margin:22px 0; }
+  figure img { width:100%; height:auto; border:1px solid var(--rule); border-radius:8px; background:#fff; }
+  figcaption { font-size:13px; color:var(--muted); margin-top:8px; }
+  .pipeline { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:16px 0; font-size:14px; }
+  .pipeline span { background:var(--card); border:1px solid var(--rule); border-radius:8px; padding:8px 10px; }
+  .pipeline b { color:var(--muted); font-weight:400; }
+  .callout { border-left:3px solid var(--accent); background:var(--card); padding:12px 16px; margin:20px 0; border-radius:0 8px 8px 0; }
+  code { font-family:ui-monospace, Consolas, Menlo, monospace; font-size:14px; background:var(--code); padding:1px 5px; border-radius:4px; }
+  footer { margin-top:64px; padding-top:16px; border-top:1px solid var(--rule); font-size:14px; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<div class="eyebrow">LLM agents · topological data analysis</div>
+<h1>Agents Spiral Before They Run Out of Context</h1>
+<p class="lede">A label-free topological monitor, built only from how agent runs normally begin, flags software-engineering agents heading for context exhaustion about 16 turns before the cutoff.</p>
+<div class="byline">Joshua DeBellis · October 2026 · <a href="https://github.com/joshuadebellis/agent-spiral-monitor">Code on GitHub</a></div>
+
+<div class="stats">
+  <div class="stat"><div class="big">0.885</div><div class="vs">AUC, length-matched, fresh data</div><div class="label">Late-collapse topology score alone: failing vs successful runs</div></div>
+  <div class="stat"><div class="big">16 turns</div><div class="vs">median lead time</div><div class="label">75% of doomed runs flagged at a 10% false-alarm rate on successful runs</div></div>
+  <div class="stat"><div class="big">0 labels</div><div class="vs">reference = how runs begin</div><div class="label">Matches a repeat counter built after studying the failures</div></div>
+</div>
+
+<h2>The question</h2>
+<p>Failures in reasoning traces should have a strange shape. If an agent is going in circles, the geometry of its steps in embedding space should show it, and persistent homology is built to measure exactly that kind of geometry: clusters and loops.</p>
+<p>The test bed is <a href="https://huggingface.co/datasets/nebius/SWE-agent-trajectories">nebius/SWE-agent-trajectories</a>, SWE-agent runs by a Llama-70B agent on real GitHub issues, grouped into runs that succeeded, ran out of context, or submitted a wrong fix.</p>
+
+<h2>Method</h2>
+<div class="pipeline">
+  <span>agent turns</span><b>→</b><span>embed each step (MiniLM)</span><b>→</b><span>15-turn windows</span><b>→</b><span>persistence diagrams</span><b>→</b><span>persistence images</span><b>→</b><span>kNN distance to reference</span>
+</div>
+<ul>
+  <li><b>Rips H0</b> on cosine distance captures clustering: near-copies merge instantly, so a spiral <i>collapses</i>.</li>
+  <li><b>Path-complex H1</b> joins consecutive steps at zero distance, so every loop is a return to an earlier state.</li>
+  <li>The anomaly score is the mean distance to the 10 nearest reference windows. In the label-free version, the reference is simply the first 15 turns of any run.</li>
+</ul>
+
+<h2>Findings</h2>
+<h3>1. Failing agents spiral</h3>
+<p>In the last 15 actions of runs that hit the context limit, the topology collapses: most steps are near-copies of another. Reading the endings confirms it: the same edit retried five times, two files opened alternately, <code>ls</code> repeated.</p>
+
+<h3>2. It replicates, pre-registered</h3>
+<p>Four tests were fixed in advance and run on a fresh sample, with every earlier trajectory excluded. Only the late-collapse test passed, but it passed cleanly: AUC 0.885 with length matched, and +0.017 [0.008, 0.027] beyond length plus twelve hand-built repetition features, stable across 5/5 fold seeds.</p>
+
+<h3>3. The spiral comes first</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Context used so far</th><th>Repetition: doomed runs</th><th>Repetition: successful runs</th></tr></thead>
+  <tbody>
+    <tr><td>0–25%</td><td>0.19</td><td>0.06</td></tr>
+    <tr><td>25–50%</td><td>0.42</td><td>0.11</td></tr>
+    <tr><td>50–75%</td><td>0.56</td><td>0.16</td></tr>
+    <tr><td>75–100%</td><td>0.63</td><td>0.21</td></tr>
+  </tbody>
+</table></div>
+<p>Doomed runs repeat three times as often in the first quarter of their context. The loop precedes the limit; it isn't just a symptom of running out of room.</p>
+
+<h3>4. It can be seen coming, without labels</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Detector, 10% false alarms</th><th>Runs flagged</th><th>≥10 turns early</th><th>Median lead</th><th>Window AUC</th></tr></thead>
+  <tbody>
+    <tr><td>Topology, reference = known successes</td><td>0.76</td><td>0.52</td><td>16</td><td>0.787</td></tr>
+    <tr class="hl"><td>Topology, reference = run starts (no labels)</td><td>0.75</td><td>0.52</td><td>16</td><td>0.806</td></tr>
+    <tr><td>Topology, reference = own start</td><td>0.74</td><td>0.48</td><td>15</td><td>0.811</td></tr>
+    <tr><td>Repeat counter (exact string match)</td><td>0.71</td><td>0.50</td><td>15</td><td>0.683</td></tr>
+  </tbody>
+</table></div>
+<div class="callout">The repeat counter exists only because a person inspected the failures and diagnosed verbatim repetition. The topological monitor was never told what to look for, needs no outcome labels, and matches it, while separating individual windows better.</div>
+
+<figure>
+  <img src="assets/spiral_monitor.png" alt="Four panels: collapse of H0 bar lengths in failing runs; label-free topology score through the run; repeat-counter score through the run; early-detection curves at matched false-alarm rates.">
+  <figcaption>A: H0 bar lengths of the last 15 actions (runs of 31–69 turns). B–C: label-free topology score and repeat counter through the run, as percentiles of successful runs. D: early detection vs false-alarm rate.</figcaption>
+</figure>
+
+<h2>What it doesn't do</h2>
+<ul>
+  <li><b>Confidently wrong runs have no distinctive shape,</b> on this dataset or on ProcessBench and Open-SWE-Traces. Topology tells you when an agent is lost, not when it is confidently mistaken.</li>
+  <li><b>It ties, not beats, the repeat counter</b> at the run level on this harness, where loops are verbatim. Paraphrased loops, as in free-text reasoning, are where the two should separate. That test is next.</li>
+  <li><b>One model and one harness</b> (Llama-70B, SWE-agent). Whether intervening at the alarm rescues runs is untested.</li>
+</ul>
+
+<h2>Why it matters</h2>
+<p>Sixteen turns of warning at roughly half the context used is enough room to act: summarize and reset the context, nudge the agent to change strategy, escalate to a human, or stop a doomed run and save its remaining tokens. A cheap, label-free shape score is a natural control signal for agent harnesses.</p>
+
+<footer>
+  <p>Data: <a href="https://huggingface.co/datasets/nebius/SWE-agent-trajectories">nebius/SWE-agent-trajectories</a> (see its dataset card for license). Code: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial 1.0.0</a>. Text and figures: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+  <p>Joshua DeBellis · mathematical physicist and data scientist · see also <a href="https://joshuadebellis.github.io/ai-music-fingerprints/">Spectral Fingerprints of AI Music Generators</a></p>
+</footer>
+
+</main>
+</body>
+</html>

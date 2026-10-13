@@ -1,0 +1,24 @@
+dataset: nvidia/Open-SWE-Traces
+dataset_config: v1.0
+dataset_split: openhands
+generators: [MiniMax-M2.5, Qwen3.5-122B-A10B]
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+normalize_embeddings: false
+device: cuda
+tag: anomaly_main
+seed: 20261010
+stream_skip: 0
+shuffle_buffer: 2000
+max_trajectories: 3000
+max_reasoning_chars: 700
+max_action_chars: 300
+max_observation_chars: 400
+max_points_path: 250
+checkpoint_every: 500
+data_dir: data
+results_dir: results
+cv_folds: 5
+knn_k: 10
+image_pixels: 20
+n_bootstrap: 500
+min_generator_n: 300
