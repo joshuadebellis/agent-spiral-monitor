@@ -1,6 +1,6 @@
 # Agents Spiral Before They Run Out of Context
 
-**A label-free topological monitor that flags SWE agents heading for context exhaustion ~16 turns early.**
+**A topological monitor that flags SWE agents heading for context exhaustion ~16 turns early, with no outcome labels needed to build it.**
 
 Project page: **https://joshuadebellis.github.io/agent-spiral-monitor/**
 
@@ -10,7 +10,7 @@ When software-engineering agents exhaust their context window, they don't fail s
 |---|---|
 | Late collapse separates failing from successful runs (length-matched, fresh data) | AUC **0.885** from the topology score alone |
 | Adds beyond length + hand-built repetition features | **+0.017** AUC [0.008, 0.027], pre-registered, replicated, 5/5 seeds |
-| Early warning, label-free, at 10% false alarms on successful runs | **75%** of doomed runs flagged, median **16 turns** before the cutoff |
+| Early warning, no outcome labels in the reference (threshold: 10% false alarms on successful runs) | **75%** of doomed runs flagged, median **16 turns** before the cutoff |
 | vs. a repeat counter designed after inspecting failures | **tie** per run; better per window (AUC 0.81 vs 0.68) |
 | Confidently wrong runs | **no distinctive shape** (null across three datasets) |
 
@@ -26,7 +26,7 @@ agent turns → split into reasoning / action / observation text
 
 - **Rips H0** (cosine distance): how the steps cluster. Near-copies merge instantly, so a spiral collapses.
 - **Path-complex H1:** consecutive steps joined at zero distance, so every H1 bar is a return to an earlier state.
-- **Anomaly score:** mean distance to the 10 nearest reference windows. References are either known-successful runs or, in the label-free version, the first 15 turns of *any* run.
+- **Anomaly score:** mean distance to the 10 nearest reference windows. References are either known-successful runs or the first 15 turns of *any* run, which needs no outcome labels. In both cases the alarm threshold is set at a 10% false-alarm rate on successful runs, so outcome labels are used only to calibrate the threshold.
 
 ## Results
 
@@ -55,17 +55,17 @@ Repetition in hit-limit runs vs successes, by fraction of the run's total text u
 
 Doomed runs already repeat 3× as often in the first quarter of context: the loop precedes the limit, then worsens as context fills.
 
-### 4. Early warning, without labels
-A rolling 15-turn topology score along each run, compared at matched false-alarm rates on successful runs (held-out tasks):
+### 4. Early warning, without outcome labels in the reference
+A rolling 15-turn topology score (Rips H0 of the action embeddings) along each run, compared at matched false-alarm rates on successful runs (held-out tasks):
 
 | Detector (10% false alarms) | Runs flagged | Flagged ≥10 turns early | Median lead | Window AUC |
 |---|---|---|---|---|
 | Topology, reference = known successes | 0.76 | 0.52 | 16 turns | 0.787 |
-| **Topology, reference = run starts (no labels)** | **0.75** | **0.52** | **16 turns** | **0.806** |
+| **Topology, reference = run starts (no outcome labels)** | **0.75** | **0.52** | **16 turns** | **0.806** |
 | Topology, reference = the run's own start | 0.74 | 0.48 | 15 turns | 0.811 |
 | Repeat counter (exact string match) | 0.71 | 0.50 | 15 turns | 0.683 |
 
-Run-level differences are within bootstrap noise. The label-free monitor matches a repetition detector that only exists because someone inspected the failures first, and separates individual windows better.
+Run-level differences are within bootstrap noise. The monitor built without outcome labels matches a repetition detector that only exists because someone inspected the failures first, and separates individual windows better.
 
 ![Spiral monitor figure](docs/assets/spiral_monitor.png)
 

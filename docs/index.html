@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agents Spiral Before They Run Out of Context</title>
-<meta name="description" content="A label-free topological monitor flags SWE agents heading for context exhaustion about 16 turns early.">
+<meta name="description" content="A topological monitor, built without outcome labels, flags SWE agents heading for context exhaustion about 16 turns early.">
 <style>
   :root { --bg:#fbfaf7; --fg:#1d1d1b; --muted:#5d5b55; --rule:#dedbd2; --card:#ffffff; --accent:#c4541b; --accent-soft:#f6e6dc; --code:#f1efe9; }
   @media (prefers-color-scheme: dark) {
@@ -51,7 +51,7 @@
 
 <div class="eyebrow">LLM agents · topological data analysis</div>
 <h1>Agents Spiral Before They Run Out of Context</h1>
-<p class="lede">A label-free topological monitor, built only from how agent runs normally begin, flags software-engineering agents heading for context exhaustion about 16 turns before the cutoff.</p>
+<p class="lede">A topological monitor, built only from how agent runs normally begin (no outcome labels needed), flags software-engineering agents heading for context exhaustion about 16 turns before the cutoff.</p>
 <div class="byline">Joshua DeBellis · October 2026 · <a href="https://github.com/joshuadebellis/agent-spiral-monitor">Code on GitHub</a></div>
 
 <div class="stats">
@@ -71,7 +71,7 @@
 <ul>
   <li><b>Rips H0</b> on cosine distance captures clustering: near-copies merge instantly, so a spiral <i>collapses</i>.</li>
   <li><b>Path-complex H1</b> joins consecutive steps at zero distance, so every loop is a return to an earlier state.</li>
-  <li>The anomaly score is the mean distance to the 10 nearest reference windows. In the label-free version, the reference is simply the first 15 turns of any run.</li>
+  <li>The anomaly score is the mean distance to the 10 nearest reference windows. In the version without outcome labels, the reference is simply the first 15 turns of any run. Either way, the alarm threshold is set at a 10% false-alarm rate on successful runs, so outcome labels are used only to calibrate it.</li>
 </ul>
 
 <h2>Findings</h2>
@@ -93,12 +93,12 @@
 </table></div>
 <p>Doomed runs repeat three times as often in the first quarter of their context. The loop precedes the limit; it isn't just a symptom of running out of room.</p>
 
-<h3>4. It can be seen coming, without labels</h3>
+<h3>4. It can be seen coming, without outcome labels in the reference</h3>
 <div class="table-wrap"><table>
   <thead><tr><th>Detector, 10% false alarms</th><th>Runs flagged</th><th>≥10 turns early</th><th>Median lead</th><th>Window AUC</th></tr></thead>
   <tbody>
     <tr><td>Topology, reference = known successes</td><td>0.76</td><td>0.52</td><td>16</td><td>0.787</td></tr>
-    <tr class="hl"><td>Topology, reference = run starts (no labels)</td><td>0.75</td><td>0.52</td><td>16</td><td>0.806</td></tr>
+    <tr class="hl"><td>Topology, reference = run starts (no outcome labels)</td><td>0.75</td><td>0.52</td><td>16</td><td>0.806</td></tr>
     <tr><td>Topology, reference = own start</td><td>0.74</td><td>0.48</td><td>15</td><td>0.811</td></tr>
     <tr><td>Repeat counter (exact string match)</td><td>0.71</td><td>0.50</td><td>15</td><td>0.683</td></tr>
   </tbody>
@@ -106,8 +106,8 @@
 <div class="callout">The repeat counter exists only because a person inspected the failures and diagnosed verbatim repetition. The topological monitor was never told what to look for, needs no outcome labels, and matches it, while separating individual windows better.</div>
 
 <figure>
-  <img src="assets/spiral_monitor.png" alt="Three panels: label-free topology score through the run; repeat-counter score through the run; early-detection curves at matched false-alarm rates.">
-  <figcaption>A&ndash;B: label-free topology score and repeat counter through the run, as percentiles of successful runs (shaded: 95% confidence interval). C: early detection vs false-alarm rate.</figcaption>
+  <img src="assets/spiral_monitor.png" alt="Three panels: topology score (reference built without outcome labels) through the run; repeat-counter score through the run; early-detection curves at matched false-alarm rates.">
+  <figcaption>A&ndash;B: topology score (reference built without outcome labels) and repeat counter through the run, as percentiles of successful runs (shaded: 95% confidence interval). C: early detection vs false-alarm rate.</figcaption>
 </figure>
 
 <h2>What it doesn't do</h2>
@@ -118,7 +118,7 @@
 </ul>
 
 <h2>Why it matters</h2>
-<p>Sixteen turns of warning at roughly half the context used is enough room to act: summarize and reset the context, nudge the agent to change strategy, escalate to a human, or stop a doomed run and save its remaining tokens. A cheap, label-free shape score is a natural control signal for agent harnesses.</p>
+<p>Sixteen turns of warning at roughly half the context used is enough room to act: summarize and reset the context, nudge the agent to change strategy, escalate to a human, or stop a doomed run and save its remaining tokens. A cheap shape score that needs no outcome labels to build is a natural control signal for agent harnesses.</p>
 
 <footer>
   <p>Data: <a href="https://huggingface.co/datasets/nebius/SWE-agent-trajectories">nebius/SWE-agent-trajectories</a> (see its dataset card for license). Code: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial 1.0.0</a>. Text and figures: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
