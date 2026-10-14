@@ -1,5 +1,4 @@
 """Figure for the spiral-monitor write-up. Reads saved confirm-run results only; recomputes nothing expensive."""
-import pickle
 import sys
 from pathlib import Path
 
@@ -10,13 +9,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import yaml
-from tqdm import tqdm
 
-W = 15
 EARLY = 10
 MAX_TBE = 40
 MIN_RUNS = 30
-BAND = (31, 69)
 FAIL = "#D55E00"
 OK = "#0072B2"
 GROUPS = [("hit_limit", FAIL, "Runs that hit the context limit"), ("success", OK, "Successful runs")]
@@ -33,16 +29,6 @@ def midrank_vs_success(pt, col):
     lo = np.searchsorted(ref, v, side="left")
     hi = np.searchsorted(ref, v, side="right")
     return (lo + hi) / 2.0 / len(ref)
-
-
-def bar_lengths(diagrams, ids):
-    rows = []
-    for i in tqdm(list(ids), desc="H0 bars, last 15 actions", unit="run"):
-        d = np.asarray(diagrams[i]["last"]["action"]["rips_h0"], dtype=float).reshape(-1, 2)
-        deaths = d[np.isfinite(d[:, 1]), 1]
-        bars = np.sort(deaths)[::-1][: W - 1]
-        rows.append(np.pad(bars, (0, W - 1 - len(bars))))
-    return np.vstack(rows)
 
 
 def early_detection_curve(pt, col, fas, seed):
@@ -82,7 +68,6 @@ def main():
     cfg = yaml.safe_load(Path(cfg_path).read_text(encoding="utf-8"))
     tag = cfg["tag"]
     seed = cfg["seed"]
-    data_dir = Path(cfg["data_dir"])
     res_dir = Path(cfg["results_dir"]) / f"anomaly_{tag}"
     fig_dir = Path("figures")
     fig_dir.mkdir(parents=True, exist_ok=True)
@@ -91,47 +76,29 @@ def main():
     for col in ["topo_starts", "rep"]:
         pt[f"{col}_pct"] = midrank_vs_success(pt, col)
 
-    df = pd.read_parquet(data_dir / f"anomaly_{tag}.parquet")
-    df = df[(df["n_turns"] >= BAND[0]) & (df["n_turns"] <= BAND[1]) & df["group"].isin(["success", "hit_limit"])]
-    with open(data_dir / f"anomaly_{tag}_diagrams.pkl", "rb") as f:
-        diagrams = pickle.load(f)
-    bars = {g: bar_lengths(diagrams, df.loc[df["group"] == g, "id"]) for g, _, _ in GROUPS}
-
     fas = np.round(np.linspace(0.01, 0.50, 50), 2)
     curves = {col: early_detection_curve(pt, col, fas, seed) for col, _, _, _ in DETECTORS}
 
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False})
-    fig, axes = plt.subplots(2, 2, figsize=(12, 9), constrained_layout=True)
+    fig = plt.figure(figsize=(12, 9), constrained_layout=True)
+    gs = fig.add_gridspec(2, 2)
+    ax_a = fig.add_subplot(gs[0, 0])
+    ax_b = fig.add_subplot(gs[0, 1])
+    ax_c = fig.add_subplot(gs[1, :])
 
-    ax = axes[0, 0]
-    ranks = np.arange(1, W)
-    for g, color, label in GROUPS:
-        b = bars[g]
-        ax.plot(ranks, b.mean(axis=0), color=color, lw=2, marker="o", ms=4, label=f"{label} (n={len(b)})")
-        ax.fill_between(ranks, np.percentile(b, 25, axis=0), np.percentile(b, 75, axis=0),
-                        color=color, alpha=0.18, lw=0)
-    ax.set_xticks(ranks)
-    ax.set_xlabel("H0 bar, longest to shortest")
-    ax.set_ylabel("Bar length (cosine distance)")
-    ax.set_title(f"A. Shape of the last 15 actions (runs of {BAND[0]}-{BAND[1]} turns)", loc="left", fontsize=11)
-    ax.text(0.98, 0.55, "Bars near zero = steps that are\nnear-copies of another step",
-            transform=ax.transAxes, ha="right", va="center", fontsize=9, color="#555555")
-    ax.legend(frameon=False, loc="upper right")
+    plot_profile(ax_a, pt, "topo_starts_pct", "A. Label-free topology score through the run")
+    ax_a.legend(frameon=False, loc="upper left")
+    plot_profile(ax_b, pt, "rep_pct", "B. Repeat counter (exact string match) through the run")
 
-    plot_profile(axes[0, 1], pt, "topo_starts_pct", "B. Label-free topology score through the run")
-    axes[0, 1].legend(frameon=False, loc="upper left")
-    plot_profile(axes[1, 0], pt, "rep_pct", "C. Repeat counter (exact string match) through the run")
-
-    ax = axes[1, 1]
     for col, label, color, ls in DETECTORS:
-        ax.plot(fas, curves[col], color=color, ls=ls, lw=2, label=label)
-    ax.axvline(0.10, color="#999999", ls=":", lw=1)
-    ax.set_xlim(0, 0.5)
-    ax.set_ylim(0, 1)
-    ax.set_xlabel("False alarms: share of successful runs flagged")
-    ax.set_ylabel(f"Failing runs flagged at least {EARLY} turns early")
-    ax.set_title("D. Early warning at matched false-alarm rates", loc="left", fontsize=11)
-    ax.legend(frameon=False, loc="lower right")
+        ax_c.plot(fas, curves[col], color=color, ls=ls, lw=2, label=label)
+    ax_c.axvline(0.10, color="#999999", ls=":", lw=1)
+    ax_c.set_xlim(0, 0.5)
+    ax_c.set_ylim(0, 1)
+    ax_c.set_xlabel("False alarms: share of successful runs flagged")
+    ax_c.set_ylabel(f"Failing runs flagged at least {EARLY} turns early")
+    ax_c.set_title("C. Early warning at matched false-alarm rates", loc="left", fontsize=11)
+    ax_c.legend(frameon=False, loc="lower right")
 
     fig.suptitle("Agents that run out of context spiral first, and a label-free topological monitor sees it coming",
                  fontsize=13, x=0.01, ha="left")
@@ -144,9 +111,6 @@ def main():
     print("\nEarly detection at 10% false alarms:")
     for col, label, _, _ in DETECTORS:
         print(f"  {label:<38} {curves[col][i10]:.3f}")
-    print("\nMean H0 bar lengths, last 15 actions (longest to shortest):")
-    for g, _, label in GROUPS:
-        print(f"  {label:<32} " + " ".join(f"{v:.3f}" for v in bars[g].mean(axis=0)))
     print(f"\nWrote {png} and {svg}")
 
 
